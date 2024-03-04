@@ -10,12 +10,12 @@ const bookSchema = new Schema(
     author: { type: String },
     released: { type: Number },
     available: { type: Number },
-  }
-  //   { versionKey: false }
+  },
+  { versionKey: false }
 );
 // noteSchema = Eintrag in der Tabelle (collection) notes in der DB
 
-const Note = mongoose.models.Book || mongoose.model("Book", bookSchema);
+const Book = mongoose.models.Book || mongoose.model("Book", bookSchema);
 // model Note = collection notes in der DB. Neu erstellen wenn nicht vorhanden.
 
 module.exports = Book;
