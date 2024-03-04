@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
+const Book = require("./models/Book");
+const User = require("./models/User");
 
 app.get("/", (req, res) => res.type("html").send(html));
 
