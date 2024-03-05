@@ -13,9 +13,9 @@ const bookSchema = new Schema(
   },
   { versionKey: false }
 );
-// noteSchema = Eintrag in der Tabelle (collection) notes in der DB
+// bookSchema = Eintrag in der Tabelle (collection) notes in der DB
 
 const Book = mongoose.models.Book || mongoose.model("Book", bookSchema);
-// model Note = collection notes in der DB. Neu erstellen wenn nicht vorhanden.
+// model Book = collection books in der DB. Neu erstellen wenn nicht vorhanden.
 
 module.exports = Book;
