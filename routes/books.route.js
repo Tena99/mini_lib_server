@@ -10,7 +10,7 @@ r.get("/", async (req, res) => {
   const books = await Book.find();
   console.log("Books found: ", books);
   if (!books.length) {
-    return res.json({ message: "Book not found" });
+    return res.json({ message: "Books not found" });
   }
   return res.json(books);
 });
@@ -28,13 +28,15 @@ r.get("/:id", async (req, res) => {
 r.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { user } = req.params;
+  user = req.body.user;
   await connect();
-  const userData = await User.findOne({ name: user });
-  await User.updateOne(
-    { _id: userData._id },
-    { books: [...userData.books, id] }
-  );
-  const { available } = await Book.findOne({ _id: id });
+  //   const userData = await User.findOne({ name: user });
+  //   await User.updateOne(
+  //     { _id: userData._id },
+  //     { books: [...userData.books, id] }
+  //   );
+  //   const { available } = await Book.findOne({ _id: id });
+  await User.findByIdAndUpdate({ books });
   if (available)
     await Book.updateOne({ _id: id }, { available: available - 1 });
 });
