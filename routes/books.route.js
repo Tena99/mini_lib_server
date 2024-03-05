@@ -16,10 +16,11 @@ r.get("/", async (req, res) => {
 });
 
 r.get("/:id", async (req, res) => {
-  const { id } = req.params;
   await connect();
+  const { id } = req.params;
+
   const book = await Book.findOne({ _id: id });
-  if (book) {
+  if (!book) {
     return res.json({ message: "Book not found" });
   }
   return res.json(book);
@@ -39,6 +40,32 @@ r.put("/:id", async (req, res) => {
   await User.findByIdAndUpdate({ books });
   if (available)
     await Book.updateOne({ _id: id }, { available: available - 1 });
+});
+
+r.delete("/:id", async (req, res) => {
+  const { user, id } = req.params;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { userName: user },
+      { $pull: { books: { _id: id } } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).send("User not found");
+    }
+
+    res.send("Success");
+  } catch (error) {
+    console.error(error);
+
+    if (error && error.message.includes("buffering timed out")) {
+      res.status(500).send("Operation Timed Out");
+    } else {
+      res.status(500).send("Internal Server Error");
+    }
+  }
 });
 
 module.exports = r;
