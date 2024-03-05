@@ -3,6 +3,7 @@ const connect = require("../lib/connect");
 const Book = require("../models/Book");
 const User = require("../models/User");
 const r = Router({ mergeParams: true });
+const mongoose = require("mongoose");
 
 r.get("/", async (req, res) => {
   await connect();
@@ -43,12 +44,13 @@ r.put("/:id", async (req, res) => {
 });
 
 r.delete("/:id", async (req, res) => {
+  await connect();
   const { user, id } = req.params;
 
   try {
     const updatedUser = await User.findOneAndUpdate(
       { userName: user },
-      { $pull: { books: { _id: id } } },
+      { $pull: { books: id } },
       { new: true }
     );
 
