@@ -4,6 +4,6 @@ const Book = require("../models/Book");
 const User = require("../models/User");
 const booksRoute = require("./books.route");
 const r = Router({ mergeParams: true });
-r.use("/:user/books", booksRoute);
+r.use("/books", booksRoute);
 
 module.exports = r;

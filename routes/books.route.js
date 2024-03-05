@@ -4,7 +4,7 @@ const Book = require("../models/Book");
 const User = require("../models/User");
 const r = Router({ mergeParams: true });
 
-get("/", async (req, res) => {
+r.get("/", async (req, res) => {
   await connect();
   console.log("Looking up book list...");
   const books = await Book.find();
@@ -15,7 +15,7 @@ get("/", async (req, res) => {
   return res.json(books);
 });
 
-get("/:id", async (req, res) => {
+r.get("/:id", async (req, res) => {
   const { id } = req.params;
   await connect();
   const book = await Book.findOne({ _id: id });
@@ -25,7 +25,7 @@ get("/:id", async (req, res) => {
   return res.json(book);
 });
 
-put("/:id", async (req, res) => {
+r.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { user } = req.params;
   await connect();
