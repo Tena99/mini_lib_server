@@ -36,7 +36,7 @@ r.patch("/:id", async (req, res) => {
   const rentedBook = await Book.findByIdAndUpdate(
     id,
     {
-      $dec: { available: 1 },
+      $inc: { available: -1 },
     },
     { returnDocument: "before" }
   );
