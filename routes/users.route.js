@@ -11,7 +11,7 @@ r.get("/", async (req, res) => {
   await connect();
 
   const { user } = req.params;
-  const users = await User.find({ userName: user });
+  const users = await User.find({ userName: user }).populate("books");
 
   res.json(users);
 });
