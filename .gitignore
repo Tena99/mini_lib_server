@@ -2,3 +2,5 @@ node_modules
 .DS_Store
 .env*
 *.bak*
+books.route.peter.js
+books.route.put.js

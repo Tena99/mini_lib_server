@@ -104,31 +104,4 @@ r.delete("/:id", async (req, res) => {
   }
 });
 
-r.delete("/:id", async (req, res) => {
-  await connect();
-  const { user, id } = req.params;
-
-  try {
-    const updatedUser = await User.findOneAndUpdate(
-      { userName: user },
-      { $pull: { books: id } },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return res.status(404).send("User not found");
-    }
-
-    res.send("Success");
-  } catch (error) {
-    console.error(error);
-
-    if (error && error.message.includes("buffering timed out")) {
-      res.status(500).send("Operation Timed Out");
-    } else {
-      res.status(500).send("Internal Server Error");
-    }
-  }
-});
-
 module.exports = r;
