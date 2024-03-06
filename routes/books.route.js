@@ -3,7 +3,6 @@ const connect = require("../lib/connect");
 const Book = require("../models/Book");
 const User = require("../models/User");
 const r = Router({ mergeParams: true });
-const mongoose = require("mongoose");
 
 r.get("/", async (req, res) => {
   await connect();
@@ -92,33 +91,6 @@ r.delete("/:id", async (req, res) => {
     await Book.findByIdAndUpdate(id, {
       $inc: { available: 1 },
     });
-
-    res.send("Success");
-  } catch (error) {
-    console.error(error);
-
-    if (error && error.message.includes("buffering timed out")) {
-      res.status(500).send("Operation Timed Out");
-    } else {
-      res.status(500).send("Internal Server Error");
-    }
-  }
-});
-
-r.delete("/:id", async (req, res) => {
-  await connect();
-  const { user, id } = req.params;
-
-  try {
-    const updatedUser = await User.findOneAndUpdate(
-      { userName: user },
-      { $pull: { books: id } },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return res.status(404).send("User not found");
-    }
 
     res.send("Success");
   } catch (error) {
