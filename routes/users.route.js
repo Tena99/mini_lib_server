@@ -16,6 +16,7 @@ r.get("/", async (req, res) => {
   res.json(users);
 });
 
+//add new user if name not exists yet
 r.post("/", async (req, res) => {
   await connect();
   const { user } = req.params;

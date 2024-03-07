@@ -3,10 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
-const Book = require("./models/Book");
-const User = require("./models/User");
 const index = require("./routes");
-const user = require("./routes/users.route");
 
 app.use(express.json());
 app.use(cors());
