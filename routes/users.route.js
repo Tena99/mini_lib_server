@@ -23,10 +23,11 @@ r.post("/", async (req, res) => {
   const exist = await User.findOne({ userName: user });
   if (!exist) {
     await User.addOne({ userName: user });
-
-    res.json(res.status(200).send(`New user ${user} successfully added!`));
+    res.json(exist);
+    res.status(200).send(`New user ${user} successfully added!`);
   } else {
-    res.json(res.status(200).send(`Hello ${user}!`));
+    res.status(200).send(`Hello ${user}!`);
+    res.json(user);
   }
 });
 
