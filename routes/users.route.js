@@ -16,4 +16,18 @@ r.get("/", async (req, res) => {
   res.json(users);
 });
 
+r.post("/", async (req, res) => {
+  await connect();
+
+  const { user } = req.params;
+  const exist = await User.findOne({ userName: user });
+  if (!exist) {
+    await User.addOne({ userName: user });
+
+    res.json(res.status(200).send(`New user ${user} successfully added!`));
+  } else {
+    res.json(res.status(200).send(`Hello ${user}!`));
+  }
+});
+
 module.exports = r;
